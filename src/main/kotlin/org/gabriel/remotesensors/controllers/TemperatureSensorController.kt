@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 
 /**
- * @project remotesensors
+ * @project remote-sensors-api
  * @author daohn on 18/12/2020
  */
 @RestController

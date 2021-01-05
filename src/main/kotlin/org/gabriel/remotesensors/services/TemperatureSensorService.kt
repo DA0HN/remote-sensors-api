@@ -5,7 +5,7 @@ import java.util.*
 
 
 /**
- * @project remotesensors
+ * @project remote-sensors-api
  * @author daohn on 18/12/2020
  */
 @Service

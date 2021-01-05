@@ -6,16 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="remotesensors" />
+        <module name="remote-sensors-api" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="remotesensors" target="1.8" />
+      <module name="remote-sensors-api" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="remotesensors" options="-parameters" />
+      <module name="remote-sensors-api" options="-parameters" />
     </option>
   </component>
   <component name="TypeScriptCompiler">
