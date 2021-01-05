@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
     <groupId>org.gabriel</groupId>
-    <artifactId>remotesensors</artifactId>
+    <artifactId>remote-sensors-api</artifactId>
     <version>0.1.0</version>
-    <name>remotesensors</name>
+    <name>remote-sensors-api</name>
     <description>Serviço responsável pela gestão de sensores de microcontroladores</description>
 
     <properties>
