@@ -1,6 +1,5 @@
 package org.gabriel.remotesensors.controllers
 
-import org.gabriel.remotesensors.models.Data
 import org.gabriel.remotesensors.models.DataResponse
 import org.gabriel.remotesensors.services.ITemperatureSensorService
 import org.springframework.http.HttpStatus
@@ -17,14 +16,22 @@ import org.springframework.web.bind.annotation.*
 class TemperatureSensorController(private val temperatureSensorService: ITemperatureSensorService) {
 
     @PostMapping
-    fun enqueue(@RequestBody temperature: Double): ResponseEntity<String> {
-        temperatureSensorService.enqueue(temperature)
-        return ResponseEntity.status(HttpStatus.CREATED).body("Temperatura adicionada na fila")
+    fun enqueue(@RequestBody temperature: Double): ResponseEntity<DataResponse> {
+        val response = temperatureSensorService.enqueue(temperature)
+
+        if (response.hasError)
+            return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).body(response)
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }
 
     @GetMapping
-    fun dequeue(): ResponseEntity<Data> {
-        val temp = temperatureSensorService.dequeue()
-        return ResponseEntity.ok(temp)
+    fun dequeue(): ResponseEntity<DataResponse> {
+        val response = temperatureSensorService.dequeue()
+
+        if (response.hasError)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response)
+
+        return ResponseEntity.ok(response)
     }
 }
