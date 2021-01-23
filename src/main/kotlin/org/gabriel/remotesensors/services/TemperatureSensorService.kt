@@ -1,5 +1,6 @@
 package org.gabriel.remotesensors.services
 
+import mu.KotlinLogging
 import org.gabriel.remotesensors.models.Data
 import org.gabriel.remotesensors.models.DataResponse
 import org.springframework.stereotype.Service
@@ -15,6 +16,7 @@ import java.util.*
 @Service
 class TemperatureSensorService : ITemperatureSensorService {
 
+    private val logger = KotlinLogging.logger{}
     private val maxSize = 20
     private var queue: Queue<Data> = LinkedList()
 
@@ -24,13 +26,18 @@ class TemperatureSensorService : ITemperatureSensorService {
             date = LocalDateTime.now(ZoneId.of("GMT-4"))
         )
 
-        if (queue.size >= maxSize) return DataResponse(
-            queueSize = queue.size,
-            message = "Não é possível adicionar mais de $maxSize valores",
-            hasError = true,
-        )
+        if (queue.size >= maxSize) {
+            logger.warn{ "Não é possível adicionar mais de $maxSize valores" }
+            return DataResponse(
+                queueSize = queue.size,
+                message = "Não é possível adicionar mais de $maxSize valores",
+                hasError = true,
+            )
+        }
 
         queue.add(data)
+
+        logger.info { "Temperatura adicionada à fila $data" }
 
         return DataResponse(
             data = data,
@@ -42,6 +49,8 @@ class TemperatureSensorService : ITemperatureSensorService {
 
     override fun dequeue(): DataResponse {
         if (queue.size == 0) {
+            logger.warn { "Não há elementos adicionados à fila" }
+
             return DataResponse(
                 queueSize = queue.size,
                 message = "Não há elementos adicionados à fila",
@@ -50,6 +59,8 @@ class TemperatureSensorService : ITemperatureSensorService {
         }
 
         val data = queue.poll()
+
+        logger.info { "$data retirado da fila" }
 
         return DataResponse(
             data = data,
