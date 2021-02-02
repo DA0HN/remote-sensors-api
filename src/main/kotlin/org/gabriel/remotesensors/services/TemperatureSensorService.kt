@@ -16,8 +16,8 @@ import java.util.*
 @Service
 class TemperatureSensorService : ITemperatureSensorService {
 
-    private val logger = KotlinLogging.logger{}
-    private val maxSize = 20
+    private val logger = KotlinLogging.logger {}
+    private val maxSize = 50
     private var queue: Queue<Data> = LinkedList()
 
     override fun enqueue(temperature: Double): DataResponse {
